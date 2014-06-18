@@ -1,0 +1,38 @@
+initPaging ........................ Fixed an error in setting the wrong bit to enable 4MB pages (was not getting enabled)
+terminal.c ........................ Fixed an error where you could backspace past the current terminal buffer
+kernel.c/shell_execute ............ Error checking was incorrect for the initial call to execute the shell
+system_calls.c/execute ............ Error checking was incorrect for execute function which executes new process 
+system_calls.c/execute ............ Needed to add a null terminator to the end of the filename, for the case where it doesn't end on a null terminator directly after parse
+kernel.c/shell_execute ............ Needed to add a null terminator to the end of the filename, for the case where it doesn't end on a null terminator directly after parse
+kernel.c/shell_execute ............ Executable data not copied correctly. Used a memcpy to fix issue.
+kernel.c/shell_execute ............ Executable data not copied as blocks. Fixed read_data to copy data correctly. Removed memcpy call
+kernel.c/shell_execute ............ Eliminated all parsing and decided to hardcode arguments to avoid more errors.
+system_linkage .................... Added a dummy function since we are setting off by one
+general ........................... Clearing screen before printing exception, so we thought execute was wrong but really our exception handler screwed everything up
+filesystem.c ...................... Incorrect NULL error check in fs_read_dir
+system_calls.c .................... Added functionality for file desc "flags" member
+system_calls.c .................... Added conditional to verify valid fd.
+system_calls.c .................... Added conditional to prevent read/write/close closed files.
+system_calls.c .................... Fixed system_close - should not be allowed to close stdin and stdout
+exceptions.c ...................... Faults now kill program ( calls sys_halt(256) )
+system_calls.c .................... halting the last shell would triple-fault, now prints a message and restarts shell
+filesystem.c ...................... Rewrote read_data to fix errors with copying the program to user space, fixed counter and fish
+filesytem.c ....................... Removed global dentry variable fixing fs_read_file
+terminal_driver.c ................. Keyboard interrupts would write to the active terminal (getting cpu time), created "visible_terminal"
+lib.c ............................. putc would always print the active terminal, added an override option to print to force a print to the visible terminal for keyboard interrupts, etc.
+terminal_driver.c ................. Switching from a terminal that fails to start shell back to a running terminal page faults, fixed by ensuring the active terminal has a valid pid before setting cr3 back to the active terminal
+rtc.c ............................. Fixed only one interrupt error. Interrupt register on rtc needed to be read from
+interrupts.c ...................... RTC interrupt flag not being sent to rtc driver correctly. Moved location of rtc handler to fix issue.
+<<<<<<< .mine
+pit.h ............................. Fixed algorithm to change Hz setting in the pit.c
+=======
+exceptions.c ...................... IDT was calling incorrect exception handler. Fixed by inserting correct handlers into correct locations.
+interrupts.c ...................... Second row of characters were off by one. Added NUL value for tab character.
+system_calls.c .................... Page faulting within execute. Added a function, in_allowed_vm to error check.
+>>>>>>> .r19724
+
+
+
+TODO: 
+Cat Fixed
+RTC execute no longer page faults (not an actual exe)

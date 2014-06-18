@@ -1,0 +1,27 @@
+boot.o: boot.S multiboot.h x86_desc.h types.h
+exception_wrappers.o: exception_wrappers.S
+interrupt_wrappers.o: interrupt_wrappers.S
+system_linkage.o: system_linkage.S
+x86_desc.o: x86_desc.S x86_desc.h types.h
+exception.o: exception.c exception.h types.h lib.h system_calls.h \
+  x86_desc.h filesystem.h initPaging.h terminal_driver.h rtc.h i8259.h
+filesystem.o: filesystem.c filesystem.h types.h lib.h system_calls.h \
+  x86_desc.h initPaging.h terminal_driver.h rtc.h i8259.h
+i8259.o: i8259.c i8259.h types.h lib.h
+initPaging.o: initPaging.c initPaging.h types.h lib.h
+interrupts.o: interrupts.c interrupts.h types.h i8259.h lib.h \
+  terminal_driver.h system_calls.h x86_desc.h filesystem.h initPaging.h \
+  rtc.h login.h
+kernel.o: kernel.c multiboot.h types.h x86_desc.h lib.h i8259.h \
+  initPaging.h debug.h exception.h system_calls.h filesystem.h \
+  terminal_driver.h rtc.h interrupts.h login.h pit.h
+lib.o: lib.c lib.h types.h initPaging.h
+login.o: login.c login.h types.h lib.h terminal_driver.h system_calls.h \
+  x86_desc.h filesystem.h initPaging.h rtc.h i8259.h
+pit.o: pit.c pit.h types.h i8259.h lib.h terminal_driver.h system_calls.h \
+  x86_desc.h filesystem.h initPaging.h rtc.h
+rtc.o: rtc.c rtc.h types.h i8259.h lib.h
+system_calls.o: system_calls.c system_calls.h x86_desc.h types.h \
+  filesystem.h lib.h initPaging.h terminal_driver.h rtc.h i8259.h
+terminal_driver.o: terminal_driver.c terminal_driver.h types.h \
+  system_calls.h x86_desc.h filesystem.h lib.h initPaging.h rtc.h i8259.h
